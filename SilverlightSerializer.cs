@@ -936,7 +936,7 @@ namespace Serialization
             //Get a name for the item
             storage.DeserializeGetName(entry);
             //Update the core info including a property getter
-            if(entry.MustHaveName) UpdateEntryWithName(entry);
+            if (entry.MustHaveName) UpdateEntryWithName(entry);
             //Start to deserialize
             var candidate = storage.StartDeserializing(entry);
             if (candidate != null)
@@ -1804,19 +1804,32 @@ namespace Serialization
         {
             try
             {
-                if (itemType.Name.StartsWith("IList"))
-                    itemType = Type.GetType("Alterian.BaseItemTypes.Collections.ObservableCollection");
                 return Activator.CreateInstance(itemType);
             }
             catch (Exception)
             {
-                return itemType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                try
+                {
+                    return itemType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                }
+                catch
+                {
+                    var error = string.Format("Could not construct an object of type '{0}', it must be creatable in this scope and have a default parameterless constructor", itemType.FullName);
+                    throw new MissingConstructorException(error);
+                }
 
             }
 
         }
 
+        public class MissingConstructorException : Exception
+        {
+            public MissingConstructorException(string message)
+                : base(message)
+            {
 
+            }
+        }
 
         #region Basic IO
 
