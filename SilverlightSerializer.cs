@@ -51,6 +51,14 @@ namespace Serialization
     public class SerializerId : Attribute
     {
     }
+    /// <summary>
+    /// Always use an event to create instances of this type
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
+    public class CreateUsingEvent : Attribute
+    {
+    }
+
 
     public interface ISerializeObject
     {
@@ -122,6 +130,36 @@ namespace Serialization
             /// </summary>
             public Type UseType = null;
         }
+
+        /// <summary>
+        /// Arguments for object creation event
+        /// </summary>
+        public class ObjectMappingEventArgs : EventArgs
+        {
+            /// <summary>
+            /// The type that cannot be
+            /// </summary>
+            public Type TypeToConstruct;
+            /// <summary>
+            /// Supply a type to use instead
+            /// </summary>
+            public object Instance = null;
+        }
+
+
+        /// <summary>
+        /// Event that is fired if a particular type cannot be instantiated
+        /// </summary>
+        public static event EventHandler<ObjectMappingEventArgs> CreateType;
+
+
+        internal static void InvokeCreateType(ObjectMappingEventArgs e)
+        {
+            EventHandler<ObjectMappingEventArgs> handler = CreateType;
+            if (handler != null)
+                handler(null, e);
+        }
+
 
         /// <summary>
         /// Event that is fired if a particular type cannot be found
@@ -1799,28 +1837,49 @@ namespace Serialization
             WriteProperties(itemType, item, storage);
             WriteFields(itemType, item, storage);
         }
-
+        /// <summary>
+        /// Create an instance of a type
+        /// </summary>
+        /// <param name="itemType">The type to construct</param>
+        /// <returns></returns>
         internal static object CreateObject(Type itemType)
         {
             try
             {
-                return Activator.CreateInstance(itemType);
+                return itemType.IsDefined(typeof(CreateUsingEvent), false) ? CreateInstance(itemType) : Activator.CreateInstance(itemType);
             }
             catch (Exception)
             {
                 try
                 {
-                    return itemType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                    var constructorInfo = itemType.GetConstructor(new Type[] { });
+                    return constructorInfo != null ? constructorInfo.Invoke(new object[] { }) : CreateInstance(itemType);
                 }
                 catch
                 {
-                    var error = string.Format("Could not construct an object of type '{0}', it must be creatable in this scope and have a default parameterless constructor", itemType.FullName);
-                    throw new MissingConstructorException(error);
+                    return CreateInstance(itemType);
                 }
 
             }
 
         }
+
+        private static object CreateInstance(Type itemType)
+        {
+            //Raise an event to construct the object
+            var ct = new ObjectMappingEventArgs();
+            ct.TypeToConstruct = itemType;
+            InvokeCreateType(ct);
+            //Check if we created the right thing
+            if (ct.Instance != null && (ct.Instance.GetType() == itemType || ct.Instance.GetType().IsSubclassOf(itemType)))
+            {
+                return ct.Instance;
+            }
+
+            var error = string.Format("Could not construct an object of type '{0}', it must be creatable in this scope and have a default parameterless constructor or you should handle the CreateType event on SilverlightSerializer to construct the object", itemType.FullName);
+            throw new MissingConstructorException(error);
+        }
+
 
         public class MissingConstructorException : Exception
         {
