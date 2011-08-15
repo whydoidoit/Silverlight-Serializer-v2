@@ -121,7 +121,7 @@ namespace Serialization
             var itemType = item.GetType().TypeHandle;
 
             //If this isn't a simple type, then this might be a subclass so we need to
-            //store the type anyway
+            //store the type 
             if (storedType == null || !storedType.Equals(item.GetType()) || SilverlightSerializer.Verbose)
             {
                 //Write the type identifier
