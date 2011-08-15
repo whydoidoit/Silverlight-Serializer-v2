@@ -122,7 +122,7 @@ namespace Serialization
 
             //If this isn't a simple type, then this might be a subclass so we need to
             //store the type
-            if (storedType == null || storedType.TypeHandle != itemType || SilverlightSerializer.Verbose)
+            if (storedType == null || !storedType.Equals(item.GetType()) || SilverlightSerializer.Verbose)
             {
                 //Write the type identifier
                 var tpId = SilverlightSerializer.GetTypeId(itemType);
@@ -360,7 +360,7 @@ namespace Serialization
             return null;
         }
 
-        
+
         public Entry BeginReadProperty(Entry entry)
         {
             return entry;
