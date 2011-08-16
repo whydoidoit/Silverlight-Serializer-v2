@@ -177,7 +177,7 @@ namespace Serialization
 
             var stream = new MemoryStream();
             var outputWr = new BinaryWriter(stream);
-            outputWr.Write("SerV6");
+            outputWr.Write("SerV7");
             //New, store the verbose property
             outputWr.Write(SilverlightSerializer.Verbose);
             outputWr.Write(SilverlightSerializer.KnownTypes.Count);

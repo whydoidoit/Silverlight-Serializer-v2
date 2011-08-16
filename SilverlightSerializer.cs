@@ -1144,6 +1144,8 @@ namespace Serialization
                 }
                 storage.EndReadObjectArray();
             }
+
+
             return result;
 
 
@@ -1261,6 +1263,10 @@ namespace Serialization
                 storage.EndReadDictionaryValueItem();
             }
             storage.EndReadDictionary();
+
+            if (currentVersion >= 7)
+                DeserializeObjectAndProperties(o, itemType, storage);
+
             return o;
         }
 
@@ -1295,6 +1301,10 @@ namespace Serialization
                 storage.EndReadListItem();
             }
             storage.EndReadList();
+
+            if (currentVersion >= 7)
+                DeserializeObjectAndProperties(o, itemType, storage);
+
             return o;
         }
 
@@ -1619,6 +1629,8 @@ namespace Serialization
 
         private static void SerializeList(IList item, Type tp, IStorage storage)
         {
+
+
             Type valueType = null;
             //Try to optimize the storage of types based on the type of list
             if (tp.IsGenericType)
@@ -1643,6 +1655,8 @@ namespace Serialization
                 storage.EndWriteListItem();
             }
             storage.EndWriteList();
+
+            SerializeObjectAndProperties(item, tp, storage);
         }
 
         private static void SerializeDictionary(IDictionary item, Type tp, IStorage storage)
@@ -1688,6 +1702,8 @@ namespace Serialization
             }
 
             storage.EndWriteDictionary();
+
+            SerializeObjectAndProperties(item, tp, storage);
         }
 
         private static void SerializeArray(Array item, Type tp, IStorage storage)
@@ -1721,6 +1737,8 @@ namespace Serialization
                 }
                 storage.EndWriteObjectArray();
             }
+
+
         }
 
         private static void SerializeMultiDimensionArray(Array item, Type tp, IStorage storage)
@@ -1760,6 +1778,7 @@ namespace Serialization
             SerializeArrayPart(item, 0, indicies, storage);
 
             storage.EndMultiDimensionArray();
+
         }
 
         private static void SerializeArrayPart(Array item, int i, int[] indices, IStorage storage)
