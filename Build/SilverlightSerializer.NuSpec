@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Silverlight-Serializer</id>
+    <version>2.0.0.0</version>
+    <title>Silverlight-Serializer</title>
+    <authors>Mike Talbot</authors>
+    <owners>Mike Talbot</owners>
+    <projectUrl>http://whydoidoit.com/silverlight-serializer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A binary, reflection based serializer for Silverlight, WP7 and .NET, written in C#</description>
+    <tags>wp7,silverlight,.net,binary,serialisation</tags>
+  </metadata>
+</package>

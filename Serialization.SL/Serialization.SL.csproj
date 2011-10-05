@@ -124,15 +124,6 @@
     <Compile Include="SilverlightSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="TestSilverlightClasses\TestSilverlightClasses.csproj">
-      <Project>{6C441CE2-10BE-4F43-BBC4-0E139EC52581}</Project>
-      <Name>TestSilverlightClasses</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
