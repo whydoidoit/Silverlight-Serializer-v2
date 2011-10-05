@@ -7,9 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization.WP7", "Serial
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D4FFF36-986E-4E8D-B3AF-16AA9D719A31}"
 	ProjectSection(SolutionItems) = preProject
+		Build.cmd = Build.cmd
 		license.txt = license.txt
 		README.txt = README.txt
-		SilverlightSerializer.NuSpec = SilverlightSerializer.NuSpec
+		Build\SilverlightSerializer.NuSpec = Build\SilverlightSerializer.NuSpec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization", "Serialization\Serialization.csproj", "{41CCE682-1AA5-449C-8D91-5919E36A93A5}"
