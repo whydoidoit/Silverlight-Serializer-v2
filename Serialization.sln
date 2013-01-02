@@ -9,13 +9,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Build.cmd = Build.cmd
 		license.txt = license.txt
+		Local.testsettings = Local.testsettings
 		README.txt = README.txt
+		Serialization.vsmdi = Serialization.vsmdi
 		Build\SilverlightSerializer.NuSpec = Build\SilverlightSerializer.NuSpec
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization", "Serialization\Serialization.csproj", "{41CCE682-1AA5-449C-8D91-5919E36A93A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization.UnitTests", "Serialization.UnitTests\Serialization.UnitTests.csproj", "{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}"
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Serialization.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		alchemator|Any CPU = alchemator|Any CPU
 		Analytics|Any CPU = Analytics|Any CPU
@@ -54,6 +62,16 @@ Global
 		{41CCE682-1AA5-449C-8D91-5919E36A93A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41CCE682-1AA5-449C-8D91-5919E36A93A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41CCE682-1AA5-449C-8D91-5919E36A93A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.alchemator|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.alchemator|Any CPU.Build.0 = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.Analytics|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.Analytics|Any CPU.Build.0 = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.CampaignUI|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.CampaignUI|Any CPU.Build.0 = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DE2DC4-00D7-40A3-B4DD-E801D9606CD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

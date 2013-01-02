@@ -449,11 +449,30 @@ namespace Serialization
                 return a;
             }
             var result = Array.CreateInstance(elementType, count);
-            for (var l = 0; l < count; l++)
+            
+            //fix for deserializing arrays of enum values
+            if (elementType.IsEnum)
             {
-                result.SetValue(this.ReadSimpleValue(elementType), l);
+                for (var l = 0; l < count; l++)
+                {
+                    object enumValue = ReadEnumValue(elementType);
+                    result.SetValue(enumValue, l);
+                }
+            }
+            else
+            {
+                for (var l = 0; l < count; l++)
+                {
+                    result.SetValue(this.ReadSimpleValue(elementType), l);
+                }
             }
             return result;
+        }
+
+        private object ReadEnumValue(Type elementType)
+        {
+            var readValue = ReadSimpleValue(elementType);
+            return Enum.ToObject(elementType, readValue);
         }
 
         public int BeginReadProperties()
